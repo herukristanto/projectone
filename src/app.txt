@@ -1,0 +1,34 @@
+import React, {useState} from 'react';
+import {View, TextInput, Button} from 'react-native';
+// import {WebView} from 'react-native-webview';
+import {authentication} from '../firebase/firebase.config';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+
+const App = () => {
+  const [IsSignedIn, setIsSignedIn] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const RegisterUser = () => {
+    createUserWithEmailAndPassword(authentication,email,password)
+      .then(re => {
+        console.log(re); 
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  return (
+    <View>
+      <TextInput placeholder='Username' value={email} onChangeText={setEmail}/>
+      <TextInput placeholder='Password' value={password} onChangeText={setPassword}/>
+      <Button title='Sign in' onPress={RegisterUser}/>
+    </View>
+    // <WebView
+    //   source={{
+    //     uri: 'http://172.16.10.12/ZFP?mode=proxy&lights=on&titlebar=on#View&ris_pat_id=01773863&un=radiologi&pw=hAw%2fVR1w58IFdmZIeP7HplqtDhjX8lXffsjUz6uMhyy2iPZXuiI7vbo%2fAc2%2boj%2bF',
+    //   }}
+    // />
+  );
+}
+
+export default App;
